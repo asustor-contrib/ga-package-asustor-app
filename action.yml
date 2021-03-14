@@ -1,0 +1,50 @@
+# action.yml
+name: 'Package Asustor App'
+description: 'Create an Asustor app bundle (apkg)'
+branding:
+  icon: package
+  color: blue
+author: TigerC10
+
+inputs:
+  apkg-dir:
+    description: 'Package Directory'
+    required: true
+    default: 'package'
+  out-dir:
+    description: 'Destination Directory'
+    required: true
+    default: '.'
+
+outputs:
+  apkg-app-info-general-package:
+    description: 'Bundled Asustor Package'
+  apkg-app-info-general-name:
+    description: 'Bundled Asustor Package Name'
+  apkg-app-info-general-version:
+    description: 'Bundled Asustor Package Version'
+  apkg-app-info-general-developer:
+    description: 'Bundled Asustor Package Developer'
+  apkg-app-info-general-maintainer:
+    description: 'Bundled Asustor Package Maintainer'
+  apkg-app-info-general-email:
+    description: 'Bundled Asustor Package Maintainer Email'
+  apkg-app-info-general-website:
+    description: 'Bundled Asustor Package Website'
+  apkg-app-info-general-architecture:
+    description: 'Bundled Asustor Package Architecture'
+  apkg-app-info-general-firmware:
+    description: 'Bundled Asustor Package Firmware'
+  apkg-file-name:
+    description: 'Bundled Asustor Package File Name'
+  apkg-file-path:
+    description: 'Bundled Asustor Package File Path'
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - create
+    - ${{ inputs.apkg-dir }}
+    - --destination
+    - ${{ inputs.out-dir }}

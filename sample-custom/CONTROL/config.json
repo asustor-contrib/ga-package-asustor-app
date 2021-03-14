@@ -1,0 +1,27 @@
+{
+   "general":{
+      "package":"sample-custom-apk",
+      "name":"Sample custom APK",
+      "version":"1.0.0",
+      "depends":[],
+      "conflicts":[],
+      "developer":"ASUSTOR",
+      "maintainer":"ASUSTOR",
+      "email":"support@asustor.com",
+      "website":"http://www.asustor.com/",
+      "architecture":"any",
+      "firmware":"2.1.0"
+   },
+   "adm-desktop":{
+      "app":{
+         "type":"custom",
+		 "protocol":"http",
+         "port":7777,
+		 "url":"/"
+      },
+      "privilege":{
+         "accessible":"users",
+         "customizable":true
+      }
+   }
+}

@@ -1,0 +1,74 @@
+name: Test GitHub Action
+on:
+  workflow_dispatch:
+    inputs:
+      apkg-dir:
+        description: 'Package Directory'
+        required: true
+        default: 'sample-custom'
+      out-dir:
+        description: 'Destination Directory'
+        required: true
+        default: 'out'
+
+jobs:
+  test:
+    name: Bundle sample-custom app
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - id: asustor_package
+        name: Asustor Package
+        uses: ./
+        with:
+          apkg-dir: 'sample-custom'
+          out-dir: 'out'
+
+      - name: Get the package id
+        run: echo "The asustor package is ${{ steps.asustor_package.outputs.apkg-app-info-general-package }}"
+      - name: Get the package name
+        run: echo "The asustor package name is ${{ steps.asustor_package.outputs.apkg-app-info-general-name }}"
+      - name: Get the package version
+        run: echo "The asustor package version is ${{ steps.asustor_package.outputs.apkg-app-info-general-version }}"
+      - name: Get the package developer
+        run: echo "The asustor package developer is ${{ steps.asustor_package.outputs.apkg-app-info-general-developer }}"
+      - name: Get the package maintainer
+        run: echo "The asustor package maintainer is ${{ steps.asustor_package.outputs.apkg-app-info-general-maintainer }}"
+      - name: Get the package maintainer email
+        run: echo "The asustor package maintainer email is ${{ steps.asustor_package.outputs.apkg-app-info-general-email }}"
+      - name: Get the package website
+        run: echo "The asustor package website is ${{ steps.asustor_package.outputs.apkg-app-info-general-website }}"
+      - name: Get the package architecture
+        run: echo "The asustor package architecture is ${{ steps.asustor_package.outputs.apkg-app-info-general-architecture }}"
+      - name: Get the package firmware
+        run: echo "The asustor package firmware is ${{ steps.asustor_package.outputs.apkg-app-info-general-firmware }}"
+      - name: Get the output file name
+        run: echo "The asustor package file is named ${{ steps.asustor_package.outputs.apkg-file-name }}"
+      - name: Get the output file path
+        run: echo "The asustor package file is located at ${{ steps.asustor_package.outputs.apkg-file-path }}"
+
+#     Sample release
+#      - name: Create Release
+#        id: create_release
+#        uses: actions/create-release@v1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          tag_name: v${{ steps.asustor_package.outputs.apkg-app-info-general-version }}
+#          release_name: Release ${{ steps.asustor_package.outputs.apkg-app-info-general-version }}
+#          body: |
+#            Release for version ${{ steps.asustor_package.outputs.apkg-app-info-general-version }}
+#          draft: true
+#          prerelease: false
+#      - name: Upload Release Asset
+#        id: upload-release-asset
+#        uses: actions/upload-release-asset@v1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+#          asset_path: ${{ steps.asustor_package.outputs.apkg-file-path }}
+#          asset_name: ${{ steps.asustor_package.outputs.apkg-file-name }}
+#          asset_content_type: application/zip
